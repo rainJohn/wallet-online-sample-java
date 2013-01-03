@@ -1,0 +1,19 @@
+Prerequisite
+Google AppEngine Eclipse Plugin
+https://developers.google.com/eclipse/
+
+Running the application:
+
+In eclipse import the folder as a new project
+Right click on the project under Properities->Google->AppEngine check the box "Use Google Appengine"
+Provide your project name and version(if you wish to deploy to appengine use the same name as your appengine instance), click ok
+Download and include the following libraries in war/WEB-INF/lib:
+  jakarta velocity
+  jakarta commons logging
+  gson
+  jsontoken
+  google guava
+  joda time
+Add the library jars to your build path under proprerties->Java Build Path->Libraries
+
+Run the application as a web app

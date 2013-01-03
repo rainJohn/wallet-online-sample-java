@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+  <application>wallet-java</application>
+  <version>1</version>
+  <!-- Configure java.util.logging -->
+  <system-properties>
+    <property name="java.util.logging.config.file"
+    value="WEB-INF/logging.properties" />
+  </system-properties>
+  <static-files>
+    <include path="**/*.html" />
+    <include path="**/*.js" />
+    <include path="**/*.css" />
+    <include path="**/*.png" />
+    <include path="**/*.jpeg" />
+    <include path="**/*.jpg" />
+    <include path="**/*.gif" />
+    <include path="**/*.psd" />
+    <include path="**/*.ico" />
+    <include path="**/*.woff" />
+    <include path="**/*.svg" />
+    <include path="**/*.ttf" />
+    <include path="**/*.eot" />
+    <include path="*.ico" />
+    <include path="*.html" />
+    <include path="*.js" />
+  </static-files>
+  <resource-files>
+    <include path="css/**" />
+    <include path="css/*" />
+    <include path="css" />
+    <include path="*.vm" />
+  </resource-files>
+  <threadsafe>true</threadsafe>
+  <precompilation-enabled>true</precompilation-enabled>
+  <sessions-enabled>true</sessions-enabled>
+</appengine-web-app>
