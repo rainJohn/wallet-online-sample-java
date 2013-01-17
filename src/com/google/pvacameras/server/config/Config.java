@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 public enum Config {
+      "https://wallet-web.sandbox.google.com/dev/online/v2/merchant/merchant.js"),
   SANDBOX("Your sandbox ID", "Your sandbox Secret",
       "https://wallet-web.sandbox.google.com/online/v2/merchant/merchant.js"),
   PRODUCTION("Your production ID", "Your production Secret",
