@@ -29,9 +29,9 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 public enum Config {
-  SANDBOX("Merchant Id", "Merchant Key",
+  SANDBOX("Your sandbox ID", "Your sandbox Secret",
       "https://wallet-web.sandbox.google.com/online/v2/merchant/merchant.js"),
-  PRODUCTION("Merchant Id", "Merchant Key",
+  PRODUCTION("Your production ID", "Your production Secret",
       "https://wallet.google.com/online/v2/merchant/merchant.js");
 
   public final String id;
@@ -42,8 +42,8 @@ public enum Config {
   private static Config env = Config.SANDBOX;
   public static final String MERCHANT_NAME = "XYZ Cameras";
   public static final String OAUTH_CLIENT_ID =
-      "OAuth Client ID";
-  public static final String OAUTH_API_KEY = "OAuth API Key";
+      "Your OAuth 2.0 Client ID";
+  public static final String OAUTH_API_KEY = "Your OAuth 2.0 Secret";
 
   public static final String TAX = "9.99";
   public static final String SHIPPING = "1.99";

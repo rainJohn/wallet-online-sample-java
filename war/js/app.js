@@ -233,7 +233,7 @@ var Xyz = Xyz || {};
    */
   function initCookies() {
     var currItem = Xyz.Cookie.getCurrentItem();
-    if(currItem.get('name') != null){
+    if (currItem.get('name') != null) {
       app.currentItem.setItem(currItem);
       app.cart.add(app.currentItem.get('item'));
     }
