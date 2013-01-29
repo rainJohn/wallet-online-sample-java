@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.pvacameras.server.config;
+package com.google.xyz.server.config;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,26 +24,19 @@ import javax.servlet.http.HttpServletRequest;
  *
  * Available environments
  *
- *  DEV - Development environment for testing before sandbox
  *  SANDBOX - Test environment where no real world transactions are processed
  *  PRODUCTION -Production environment with real credit cards
  *
  */
 public enum Config {
-  // TODO(mudge) local and rc are using the merchant id and auth key of Larry's suits, not sure if
-  // we want to change this.
-  LOCAL(System.getProperty("rc_merchant_id"), System.getProperty("rc_merchant_auth_key"), ""),
-  RC(System.getProperty("rc_merchant_id"), System.getProperty("rc_merchant_auth_key"),
-      "https://starlightdemo.corp.google.com/online/v2/merchant/merchant.js"),
-  DEV(System.getProperty("sandbox_merchant_id"), System.getProperty("sandbox_merchant_auth_key"),
-      "https://wallet-web.sandbox.google.com/dev/online/v2/merchant/merchant.js"),
+
   SANDBOX(System.getProperty("sandbox_merchant_id"),
       System.getProperty("sandbox_merchant_auth_key"),
       "https://wallet-web.sandbox.google.com/online/v2/merchant/merchant.js"),
-  LOADED(System.getProperty("merchant_id"), System.getProperty("merchant_auth_key"),
-      System.getProperty("online_wallet_merchant_js_url"));
+  PRODUCTION(System.getProperty("production_merchant_id"),
+      System.getProperty("production_merchant_auth_key"),
+      "https://wallet.google.com/online/v2/merchant/merchant.js");
 
-  private static int port = 8888;
   private final String id;
   private final String key;
   private final String url;
@@ -57,14 +50,6 @@ public enum Config {
     if (System.getProperty("online_wallet_enviroment") != null) {
       env = Config.valueOf(System.getProperty("online_wallet_enviroment"));
     }
-    if (System.getProperty("online_wallet_port") != null) {
-      try {
-        port = Integer.parseInt(System.getProperty("online_wallet_port"));
-      } catch (NumberFormatException e) {
-        System.out.println("port number is not a valid number, using default(8888)");
-      }
-    }
-    System.out.println("Using Enviroment " + env + " on port " + port);
   }
 
   Config(String id, String key, String url) {
@@ -97,21 +82,6 @@ public enum Config {
    */
   public static String getJsUrl() {
     return env.url;
-  }
-
-  /**
-   * Checks if the environment is running locally for development.
-   */
-  public static boolean isLocal() {
-    return env == LOCAL;
-  }
-
-  /**
-   * Helper function to get the Wallet JS URL for local development only.
-   */
-  public static String getDevJsUrl(HttpServletRequest req) {
-    return String.format("%s://%s:%s/online/v2/merchant/merchant.js", req.getScheme(),
-        req.getServerName(), Config.port);
   }
 
   // Request currency

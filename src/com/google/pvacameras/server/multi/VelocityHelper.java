@@ -36,7 +36,7 @@ public class VelocityHelper {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    merchantJsUrl = Config.isLocal() ? Config.getDevJsUrl(req) : Config.getJsUrl();
+    merchantJsUrl = Config.getJsUrl();
     // Get the response output stream PrintWriter.
     try {
       printWriter = resp.getWriter();

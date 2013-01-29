@@ -83,7 +83,7 @@ public class HomeServlet extends HttpServlet {
 
     VelocityContext context = new VelocityContext();
 
-    context.put("walletJSUrl", Config.isLocal() ? Config.getDevJsUrl(req) : Config.getJsUrl());
+    context.put("walletJSUrl", Config.getJsUrl());
     context.put("clientId", Config.OAUTH_CLIENT_ID);
     context.put("apiKey", Config.OAUTH_API_KEY);
 

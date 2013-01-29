@@ -9,7 +9,7 @@ https://developers.google.com/eclipse/
 Running the application:
 
 In eclipse import the folder as a new project Right click on the project under
- Properities->Google->AppEngine? check the box "Use Google Appengine" Provide
+Properities->Google->AppEngine? check the box "Use Google Appengine" Provide
 your project name and version(if you wish to deploy to appengine use the same
 name as your appengine instance), click ok Download and include the following
 libraries in war/WEB-INF/lib:
