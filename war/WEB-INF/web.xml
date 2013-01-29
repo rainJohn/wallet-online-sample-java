@@ -13,6 +13,47 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     <servlet-name>Home</servlet-name>
     <url-pattern>/store</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>OrderServlet</servlet-name>
+    <servlet-class>com.google.pvacameras.server.multi.OrderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrderServlet</servlet-name>
+    <url-pattern>/order</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>CFR</servlet-name>
+    <servlet-class>com.google.pvacameras.server.multi.ConfirmServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CFR</servlet-name>
+    <url-pattern>/confirm</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>RCP</servlet-name>
+    <servlet-class>com.google.pvacameras.server.multi.ReceiptServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RCP</servlet-name>
+    <url-pattern>/receipt</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Item</servlet-name>
+    <servlet-class>com.google.pvacameras.server.multi.ItemServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Item</servlet-name>
+    <url-pattern>/item</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Select</servlet-name>
+    <servlet-class>com.google.pvacameras.server.multi.SelectServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Select</servlet-name>
+    <url-pattern>/select</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>MWR</servlet-name>
     <servlet-class>

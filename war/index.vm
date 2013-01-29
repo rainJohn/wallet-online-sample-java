@@ -6,10 +6,8 @@
   <meta name="viewport" content=
   "width=device-width, initial-scale=1.0, user-scalable=0, maximum-scale=1.0">
   <title>XYZ Inc</title>
-  <link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css"
-  type="text/css">
-  <link rel="stylesheet" href=
-  "css/jquery.mobile.theme-1.2.0.min.css" type="text/css">
+  <link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" type="text/css">
+  <link rel="stylesheet" href="css/jquery.mobile.theme-1.2.0.min.css" type="text/css">
   <link rel="stylesheet" href="css/style.css" type="text/css">
   <script type="text/javascript">
     /*Credentials rendered on the server by Velocity*/
@@ -17,7 +15,7 @@
       var apiKey = "$apiKey";
   </script>
   <script type="text/javascript" src="$walletJSUrl"></script>
-  <script type="text/javascript" src="js/jquery_latest_do_not_compile.js"></script>
+  <script type="text/javascript" src="js/jquery_1_8_2_do_not_compile.js"></script>
   <script type="text/javascript" src="js/jquerymobileconfig.js"></script>
   <script type="text/javascript" src="js/jquery.mobile-1.2.0.min.js"></script>
   <script type="text/javascript" src="js/jquery_cookie.js"></script>

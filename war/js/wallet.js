@@ -55,8 +55,7 @@ var Xyz = Xyz || {};
    */
   wallet.itemToPostBody = function(param) {
     var postBody = 'total=' + Xyz.App.currentItem.get('item').get('price') +
-      '&currency=USD' + '&tax=' + Xyz.App.TAX; + '&shipping=' +
-      Xyz.App.SHIPPING;
+      '&currency=USD';
     if (param) {
       postBody += '&gid=' + param;
     }
@@ -155,9 +154,6 @@ var Xyz = Xyz || {};
   wallet.maskedWalletSuccess = function(param) {
     // Pull MaskedWalletResponse JS object from the response
     Xyz.App.user.set('maskedWallet', param.response.response);
-
-    // Check if user preauthed
-    wallet.checkAuth();
 
     // The Wallet transaction id ties various the various api requests for a
     // single order

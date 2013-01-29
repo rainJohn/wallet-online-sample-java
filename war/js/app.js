@@ -17,7 +17,7 @@ var Xyz = Xyz || {};
    * Shipping cost
    * @type {number}
    */
-  app.SHIPPING = 1.99;
+  app.SHIPPING = 9.99;
 
   /**
    * Tax cost
@@ -232,11 +232,8 @@ var Xyz = Xyz || {};
    * server agnostic.
    */
   function initCookies() {
-    var currItem = Xyz.Cookie.getCurrentItem();
-    if (currItem.get('name') != null) {
-      app.currentItem.setItem(currItem);
-      app.cart.add(app.currentItem.get('item'));
-    }
+    app.currentItem.setItem(Xyz.Cookie.getCurrentItem());
+    app.cart.add(app.currentItem.get('item'));
     app.user.set('maskedWallet', Xyz.Cookie.getMaskedWallet());
   }
 

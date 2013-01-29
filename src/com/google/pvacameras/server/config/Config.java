@@ -24,30 +24,49 @@ import javax.servlet.http.HttpServletRequest;
  *
  * Available environments
  *
+ *  DEV - Development environment for testing before sandbox
  *  SANDBOX - Test environment where no real world transactions are processed
  *  PRODUCTION -Production environment with real credit cards
  *
  */
 public enum Config {
-
-  SANDBOX("Your sandbox ID", "Your sandbox Secret",
+  // TODO(mudge) local and rc are using the merchant id and auth key of Larry's suits, not sure if
+  // we want to change this.
+  LOCAL(System.getProperty("rc_merchant_id"), System.getProperty("rc_merchant_auth_key"), ""),
+  RC(System.getProperty("rc_merchant_id"), System.getProperty("rc_merchant_auth_key"),
+      "https://starlightdemo.corp.google.com/online/v2/merchant/merchant.js"),
+  DEV(System.getProperty("sandbox_merchant_id"), System.getProperty("sandbox_merchant_auth_key"),
+      "https://wallet-web.sandbox.google.com/dev/online/v2/merchant/merchant.js"),
+  SANDBOX(System.getProperty("sandbox_merchant_id"),
+      System.getProperty("sandbox_merchant_auth_key"),
       "https://wallet-web.sandbox.google.com/online/v2/merchant/merchant.js"),
-  PRODUCTION("Your production ID", "Your production Secret",
-      "https://wallet.google.com/online/v2/merchant/merchant.js");
+  LOADED(System.getProperty("merchant_id"), System.getProperty("merchant_auth_key"),
+      System.getProperty("online_wallet_merchant_js_url"));
 
-  public final String id;
-  public final String key;
-  public final String url;
- 
-  // Set the environment that you're deploying against
-  private static Config env = Config.SANDBOX;
+  private static int port = 8888;
+  private final String id;
+  private final String key;
+  private final String url;
   public static final String MERCHANT_NAME = "XYZ Cameras";
-  public static final String OAUTH_CLIENT_ID =
-      "Your OAuth 2.0 Client ID";
-  public static final String OAUTH_API_KEY = "Your OAuth 2.0 Secret";
+  public static final String OAUTH_CLIENT_ID = System.getProperty("oauth_client_id");
+  public static final String OAUTH_API_KEY = System.getProperty("oauth_api_key");
 
-  public static final String TAX = "9.99";
-  public static final String SHIPPING = "1.99";
+  // Set the environment that you're deploying against
+  private static Config env = SANDBOX;
+  static {
+    if (System.getProperty("online_wallet_enviroment") != null) {
+      env = Config.valueOf(System.getProperty("online_wallet_enviroment"));
+    }
+    if (System.getProperty("online_wallet_port") != null) {
+      try {
+        port = Integer.parseInt(System.getProperty("online_wallet_port"));
+      } catch (NumberFormatException e) {
+        System.out.println("port number is not a valid number, using default(8888)");
+      }
+    }
+    System.out.println("Using Enviroment " + env + " on port " + port);
+  }
+
   Config(String id, String key, String url) {
     this.id = id;
     this.key = key;
@@ -73,12 +92,26 @@ public enum Config {
   }
 
   /**
-   * Helper function to get the Wallet JS URL based on environment
-   *
-   * @return Wallet JS URL
+   * Helper function to get the Wallet JS URL based on environment. To run for development against a
+   * local server you should use getDevJsUrl.
    */
   public static String getJsUrl() {
     return env.url;
+  }
+
+  /**
+   * Checks if the environment is running locally for development.
+   */
+  public static boolean isLocal() {
+    return env == LOCAL;
+  }
+
+  /**
+   * Helper function to get the Wallet JS URL for local development only.
+   */
+  public static String getDevJsUrl(HttpServletRequest req) {
+    return String.format("%s://%s:%s/online/v2/merchant/merchant.js", req.getScheme(),
+        req.getServerName(), Config.port);
   }
 
   // Request currency

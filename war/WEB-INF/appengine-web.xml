@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
-  <application>wallet-java</application>
+  <application>wallet-java-test</application>
   <version>1</version>
   <!-- Configure java.util.logging -->
   <system-properties>
-    <property name="java.util.logging.config.file"
-    value="WEB-INF/logging.properties" />
+    <property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />
+    <!-- existing environment values -->
+    <property name="rc_merchant_id" value="04149557336351695783" />
+    <property name="rc_merchant_auth_key" value="vLtbv2sOAB1vT6izzEdwKQ" />
+    <property name="sandbox_merchant_id" value="Your sandbox ID" />
+    <property name="sandbox_merchant_auth_key" value="Your sandbox Secret" />
+    <!-- set values for oauth-->
+    <property name="oauth_client_id"
+      value="Your OAuth 2.0 Client ID" />
+    <property name="oauth_api_key" value="Your OAuth 2.0 Secret" />
+    <!-- use an existing environment LOCAL,DEV,SANDBOX or use LOADED and set the values below -->
+    <property name="online_wallet_enviroment" value="LOCAL" />
+    <property name="online_wallet_merchant_js_url" value="https://wallet-web.sandbox.google.com/online/v2/merchant/merchant.js" />
+    <property name="merchant_id" value="" />
+    <property name="merchant_auth_key" value="" />
   </system-properties>
   <static-files>
     <include path="**/*.html" />

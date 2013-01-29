@@ -60,16 +60,8 @@ public class FullWalletRequestServlet extends HttpServlet {
     String description = req.getParameter("description");
     String quantity = req.getParameter("quantity");
     String unitprice = req.getParameter("unitprice");
-    String tax = req.getParameter("tax");
-    String shipping = req.getParameter("shipping");
     String gid = req.getParameter("gid");
 
-    if (tax == null) {
-      tax = Config.TAX;
-    }
-    if (shipping == null) {
-      shipping = Config.SHIPPING;
-    }
     // Create FullWalletRequest JWT
     WalletOnlineService ows =
         new WalletOnlineService(Config.getMerchantId(), Config.getMerchantSecret());
@@ -77,13 +69,13 @@ public class FullWalletRequestServlet extends HttpServlet {
     LineItem item = new LineItem(description, Integer.valueOf(quantity), unitprice);
     item.setIsDigital(false);
 
-    LineItem taxItem = new LineItem("Sales Taxes", tax, LineItem.Role.TAX);
-    LineItem shippingItem = new LineItem("Overnight Shipping", shipping, LineItem.Role.SHIPPING);
+    LineItem tax = new LineItem("Sales Taxes", "8.00", LineItem.Role.TAX);
+    LineItem shipping = new LineItem("Overnight Shipping", "9.99", LineItem.Role.SHIPPING);
 
     Cart cart = new Cart(Config.CURRENCY);
     cart.addItem(item);
-    cart.addItem(taxItem);
-    cart.addItem(shippingItem);
+    cart.addItem(tax);
+    cart.addItem(shipping);
     FullWalletBody fwb = new FullWalletBody(cart);
     fwb.setOrigin(origin);
     fwb.setGoogleTransactionId(gid);

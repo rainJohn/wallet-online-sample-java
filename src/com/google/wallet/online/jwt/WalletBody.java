@@ -24,15 +24,16 @@ package com.google.wallet.online.jwt;
  */
 public class WalletBody {
 
-  String googleTransactionId;
-  String merchantTransactionId;
-  String clientId;
-  String merchantName;
-  String origin;
-  String email;
-  Boolean phoneNumberRequired;
-  Pay pay;
-  Ship ship;
+  private String googleTransactionId;
+  private String merchantTransactionId;
+  private String clientId;
+  private String merchantName;
+  private String origin;
+  private String email;
+  private Pay pay;
+  private Ship ship;
+  private Boolean phoneNumberRequired;
+  private Boolean shippingRequired;
 
 
   public WalletBody() {
@@ -46,12 +47,14 @@ public class WalletBody {
     setOrigin(o);
     setPay(p);
     setShip(s);
+    setPhoneNumberRequired(false);
   }
 
   public WalletBody(String ci, String mn, String o) {
     setClientId(ci);
     setMerchantName(mn);
     setOrigin(o);
+    setPhoneNumberRequired(false);
   }
 
   public WalletBody(String ci, String mn, String o, Pay p, Ship s) {
@@ -60,6 +63,7 @@ public class WalletBody {
     setOrigin(o);
     setPay(p);
     setShip(s);
+    setPhoneNumberRequired(false);
   }
 
   public String getEmail() {
@@ -141,5 +145,12 @@ public class WalletBody {
   public void setMerchantTransactionId(String merchantTransactionId) {
     this.merchantTransactionId = merchantTransactionId;
   }
-  
+
+  public Boolean getShippingRequired() {
+    return shippingRequired;
+  }
+
+  public void setShippingRequired(Boolean shippingRequired) {
+    this.shippingRequired = shippingRequired;
+  }
 }

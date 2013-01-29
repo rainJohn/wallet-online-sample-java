@@ -17,10 +17,7 @@
 package com.google.wallet.online.jwt;
 
 /**
- * Ship bean
- *
- * @author pying
- *
+ * An object representing the ship data of a jwt.
  */
 public class Ship {
 

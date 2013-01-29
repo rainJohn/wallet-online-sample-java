@@ -87,11 +87,11 @@ var Xyz = Xyz || {};
     '<table class="fill-100 small-font">' +
     '<tr>' +
     '<td class="padding-30">Estimated Shipping</td>' +
-    '<td class="text-right content-indent">$<%= shipping %></td>' +
+    '<td class="text-right content-indent">$9.99</td>' +
     '</tr>' +
     '<tr>' +
     '<td class="padding-30">Tax (CA)</td>' +
-    '<td class="text-right content-indent">$<%= tax %></td>' +
+    '<td class="text-right content-indent">$8.00</td>' +
     '</tr>' +
     '<tr>' +
     '<td class="text-right content-indent total-padding-top"><b>Total</b>' +
@@ -115,11 +115,11 @@ var Xyz = Xyz || {};
     '</tr>' +
     '<tr>' +
     '<td class="text-right">Estimated Shipping</td>' +
-    '<td class="text-right content-indent"">$<%= shipping %></td>' +
+    '<td class="text-right content-indent"">$9.99</td>' +
     '</tr>' +
     '<tr>' +
     '<td class="text-right">Tax (CA)</td>' +
-    '<td class="text-right content-indent">$<%= tax %></td>' +
+    '<td class="text-right content-indent">$8.00</td>' +
     '</tr>' +
     '<tr><td> </td><td> </td></tr>' +
     '<tr>' +
@@ -151,15 +151,15 @@ var Xyz = Xyz || {};
     '<tr>' +
     '<td class="text-right">Item Subtotal</td>' +
     '<td class="text-right content-indent"><div id="confirm-subtotal">' +
-    '$<%= confirmSubtotal %></div></td>' +
+    '$<%= confirmSubtotal%></div></td>' +
     '</tr>' +
     '<tr>' +
     '<td class="text-right">Estimated Shipping</td>' +
-    '<td class="text-right content-indent">$<%= shipping %></td>' +
+    '<td class="text-right content-indent">$9.99</td>' +
     '</tr>' +
     '<tr>' +
     '<td class="text-right">Tax (CA)</td>' +
-    '<td class="text-right content-indent">$<%= tax %></td>' +
+    '<td class="text-right content-indent">$8.00</td>' +
     '</tr>' +
     '<tr><td> </td><td> </td></tr>' +
     '<tr>' +
@@ -245,7 +245,7 @@ var Xyz = Xyz || {};
      var variables = {
          image: item.get('image'),
          name: item.get('name'),
-         price: item.get('price').toFixed(2)
+         price: parseFloat(item.get('price')).toFixed(2)
        };
       var template = _.template(cameraInfoTemplate, variables);
       this.$el.html(template).trigger('create');
@@ -298,14 +298,13 @@ var Xyz = Xyz || {};
     render: function() {
       // Get the first item in the cart
       var item = this.collection.at(0);
+      var price = parseFloat(item.get('price'));
       // Set rendering variable
       var variables = {
         image: item.get('image'),
         name: item.get('name'),
-        subtotal: item.get('price').toFixed(2),
-        shipping: Xyz.App.SHIPPING.toFixed(2),
-        tax: Xyz.App.TAX.toFixed(2),
-        total: (item.get('price') + Xyz.App.SHIPPING + Xyz.App.TAX).toFixed(2)
+        subtotal: price.toFixed(2),
+        total: price + Xyz.App.SHIPPING + Xyz.App.TAX
       };
       // generate html from template
       var template = _.template(orderInfoTemplate, variables);
@@ -332,11 +331,8 @@ var Xyz = Xyz || {};
 
       if (item && this.model.get('maskedWallet')) {
         variables = {
-          confirmSubtotal: (item.get('price')).toFixed(2),
-          shipping: Xyz.App.SHIPPING.toFixed(2),
-          tax: Xyz.App.TAX.toFixed(2),
-          confirmTotal: (item.get('price') + Xyz.App.SHIPPING +
-          Xyz.App.TAX).toFixed(2)
+          confirmSubtotal: parseFloat(item.get('price')).toFixed(2),
+          confirmTotal: parseFloat(item.get('price')) + 9.99 + 8.00
         };
         var maskedWallet = this.model.get('maskedWallet');
 
@@ -371,7 +367,7 @@ var Xyz = Xyz || {};
       var variables = {
         name: item.get('name'),
         image: item.get('image'),
-        subtotal: (item.get('price')).toFixed(2)
+        subtotal: parseFloat(item.get('price')).toFixed(2)
       };
       var template = _.template(confirmationBottomTemplate, variables);
 
@@ -397,19 +393,14 @@ var Xyz = Xyz || {};
       var variables = {
         receiptEmail: '',
         receiptSubtotal: '',
-        receiptTotal: '',
-        shipping: Xyz.App.SHIPPING.toFixed(2),
-        tax: Xyz.App.TAX.toFixed(2)
+        receiptTotal: ''
       };
       if (item && this.model.get('fullWallet')) {
         var email = this.model.get('fullWallet').response.response.email;
         variables = {
           receiptEmail: email,
-          receiptSubtotal: (item.get('price')).toFixed(2),
-          shipping: Xyz.App.SHIPPING.toFixed(2),
-          tax: Xyz.App.TAX.toFixed(2),
-          receiptTotal: (item.get('price') + Xyz.App.SHIPPING +
-          Xyz.App.TAX).toFixed(2)
+          receiptSubtotal: parseFloat(item.get('price')).toFixed(2),
+          receiptTotal: parseFloat(item.get('price')) + 9.99 + 8.00
         };
       }
       var template = _.template(receiptTemplate, variables);

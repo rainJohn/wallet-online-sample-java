@@ -17,7 +17,7 @@
 package com.google.wallet.online.jwt;
 
 /**
- * This bean class represents cart line items for the Full Wallet Request. These line items
+ * This bean class represents cart line items for the {@link FullWalletRequest}. These line items
  * will be stored in receipts for customers to review
  *
  * @author pying (peng ying)
