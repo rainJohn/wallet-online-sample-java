@@ -22,4 +22,14 @@ google guava
 joda time
 Add the library jars to your build path under
 proprerties->Java Build Path->Libraries
+
+Under war/WEB-INF/appengine-web.xml specify your sandbox and production ID and auth key.
+
 Run the application as a web app
+
+Sample applications:
+
+We've included two separate example implementations:
+Single page ajax - The default example can be found at http://localhost:[port].  This example uses ajax to request jwts and uses css animations for the page transitions.  If you're planning on developing an ajax application, take a look at this sample.
+ 
+Multi page posts - This example can be found at http://localhost:[port]/select.  This example uses posts to direct users to the next page in the purcase flow.  If you're planning on developing a mutli page application, take a look at this sample.
