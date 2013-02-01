@@ -31,5 +31,6 @@ Sample applications:
 
 We've included two separate example implementations:
 Single page ajax - The default example can be found at http://localhost:[port].  This example uses ajax to request jwts and uses css animations for the page transitions.  If you're planning on developing an ajax application, take a look at this sample.
- 
+
 Multi page posts - This example can be found at http://localhost:[port]/select.  This example uses posts to direct users to the next page in the purchase flow.  If you're planning on developing a multi page application, take a look at this sample.
+
