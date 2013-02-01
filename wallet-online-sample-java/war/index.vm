@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content=
+  "width=device-width, initial-scale=1.0, user-scalable=0, maximum-scale=1.0">
+  <title>XYZ Inc</title>
+  <link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" type="text/css">
+  <link rel="stylesheet" href="css/jquery.mobile.theme-1.2.0.min.css" type="text/css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+  <script type="text/javascript">
+    /*Credentials rendered on the server by Velocity*/
+      var clientId = "$clientId";
+      var apiKey = "$apiKey";
+  </script>
+  <script type="text/javascript" src="$walletJSUrl"></script>
+  <script type="text/javascript" src="js/jquery_1_8_2_do_not_compile.js"></script>
+  <script type="text/javascript" src="js/jquerymobileconfig.js"></script>
+  <script type="text/javascript" src="js/jquery.mobile-1.2.0.min.js"></script>
+  <script type="text/javascript" src="js/jquery_cookie.js"></script>
+</head>
+
+<body>
+  <div data-role="page" id="item-selection" data-theme="c">
+    <div data-role="header" data-theme="b" id="header">
+      <div id="login-widget">
+        <ul id="menu-left" data-role="menu">
+          <li>#if(!$email) <span data-role="button" onclick=
+          "Xyz.App.login()()">Login</span> #else <span data-role="button"
+          data-icon="arrow-d" data-iconpos=
+          "left">$truncEmail</span>
+            <ul data-role="listview" data-inset="true">
+              <li data-icon="false" onclick="Xyz.App.logout()" class=
+              "logout"><a href="#" class="logout-button"></a> Sign
+              out</li>
+            </ul>#end
+          </li>
+        </ul>
+      </div>
+
+      <div class="center">
+        <span class="title">XYZ, Inc.</span>
+      </div>
+    </div>
+
+    <div data-role="header" data-theme="y" id="header2">
+      <div class="sale-header">
+        Don't miss our <span class="highlight">Free shipping</span>
+        offer today
+      </div>
+    </div>
+
+    <div data-role="content">
+      <div id="home-menu">
+        <ul id="category-list" data-role="listview" data-theme="d">
+        <!-- The list of items will be generated and inserted here  -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ITEM DETAILS PAGE -->
+  <div data-role="page" id="camera-detail" data-theme="c">
+    <div data-role="header" data-theme="b" id="header">
+      <div id="login-widget">
+        <ul id="menu-left" data-role="menu">
+          <li>#if(!$email) <span data-role="button" onclick=
+          "Xyz.App.login()">Login</span> #else <span data-role="button"
+          data-icon="arrow-d" data-iconpos=
+          "left">$truncEmail</span>
+
+            <ul data-role="listview" data-inset="true">
+              <li data-icon="false" onclick="Xyz.App.logout()" class=
+              "logout"><a href="#" class="logout-button"></a> Sign
+              out</li>
+            </ul>#end
+          </li>
+        </ul>
+      </div>
+
+      <div class="center">
+        <span class="title">XYZ, Inc.</span>
+      </div>
+    </div>
+
+    <div data-role="header" data-theme="y" id="header2">
+      <div class="sale-header">
+        Camera
+      </div>
+    </div>
+
+    <div data-role="content" id="camera-content">
+      <!-- Item information will be generated and inserted here -->
+    </div>
+
+    <div class="button-style-large">
+      <button id="add_to_cart" data-theme="a" data-corners=
+      "false">Add to cart</button>
+    </div>
+
+    <div data-role="content" id="camera-content2">
+      <!-- Additional item details will be generated and inserted here -->
+    </div>
+  </div>
+
+  <!-- ORDER DETAIL PAGE -->
+  <div data-role="page" id="order-detail" data-theme="c">
+    <div data-role="header" data-theme="b" id="header">
+      <div id="login-widget">
+        <ul id="menu-left" data-role="menu">
+          <li>#if(!$email) <span data-role="button" onclick=
+          "Xyz.App.login()">Login</span> #else <span data-role="button"
+          data-icon="arrow-d" data-iconpos=
+          "left">$truncEmail</span>
+
+            <ul data-role="listview" data-inset="true">
+              <li data-icon="false" onclick="Xyz.App.logout()" class=
+              "logout"><a href="#" class="logout-button"></a> Sign
+              out</li>
+            </ul>#end
+          </li>
+        </ul>
+      </div>
+
+      <div class="center">
+        <span class="title">XYZ, Inc.</span>
+
+        <div class="cart-items">
+          Cart (1)
+        </div>
+      </div>
+    </div>
+
+    <div data-role="header" data-theme="y" id="header2">
+      <div class="sale-header">
+        Complete your purchase
+      </div>
+    </div>
+
+    <div data-role="content" id="order-content">
+      <!-- Order details will be generated and inserted here -->
+    </div>
+    <hr>
+
+    <div class="wallet-button-container">
+      <div id="buybutton" data-enhance="false"></div>
+
+      <div class="order-detail-buttons">
+        <button id="continue_checkout" data-theme="a" data-corners=
+        "false" data-mini="true" class="confirm-button">Continue
+        Checkout</button><button id="continue_shopping"
+        data-theme="c" data-corners="false" data-mini="true" class=
+        "confirm-button">Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER CONFIRMATION PAGE -->
+  <div data-role="page" id="confirmation-page" data-theme="c">
+    <div data-role="header" data-theme="b" id="header">
+      <div id="login-widget">
+        <ul id="menu-left" data-role="menu">
+          <li>#if(!$email) <span data-role="button" onclick=
+          "Xyz.App.login()">Login</span> #else <span data-role="button"
+          data-icon="arrow-d" data-iconpos=
+          "left">$truncEmail</span>
+
+            <ul data-role="listview" data-inset="true">
+              <li data-icon="false" onclick="Xyz.App.logout()" class=
+              "logout"><a href="#" class="logout-button"></a> Sign
+              out</li>
+            </ul>#end
+          </li>
+        </ul>
+      </div>
+
+      <div class="center">
+        <span class="title">XYZ, Inc.</span>
+      </div>
+    </div>
+
+    <div data-role="header" data-theme="y" id="header2">
+      <div class="sale-header">
+        Review order
+      </div>
+    </div>
+
+    <div data-role="content" id="confirmation-content"></div>
+      <!-- Details about the order will be generated and inserted here -->
+    <div data-role="content">
+      <p class="subtitle">Buy with: <img src=
+      "img/GreyLogo124_26.png"></p>
+
+      <table class="payment-table">
+        <tr>
+          <td class="payment-table-left" id="conbilling">
+            <!-- User billing information will be populated here -->
+          </td>
+
+          <td class="payment-table-right"><button data-corners=
+          "false" id="change_payment">Change</button></td>
+        </tr>
+      </table>
+      <hr>
+
+      <p class="subtitle">Ship to:</p>
+
+      <table class="payment-table">
+        <tr>
+          <td class="payment-table-left" id="conshipping">
+            <!-- User payment information will be populated here -->
+          </td>
+
+          <td class="payment-table-right"><button id=
+          "change_shipping" data-corners=
+          "false">Change</button></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="button-style-large">
+      <button id="place_order" data-theme="a" data-corners=
+      "false">Place order</button>
+    </div>
+
+    <div data-role="content" id="confirmation-content-bottom">
+    </div>
+  </div>
+
+  <!-- LOGIN WITH GOOGLE PAGE -->
+  <div data-role="page" id="sign-on" data-theme="c">
+    <div data-role="header" data-theme="b" id="header">
+      <div class="center">
+        <span class="title">XYZ, Inc.</span>
+      </div>
+    </div>
+
+    <div data-role="header" data-theme="y" id="header2">
+      <div class="sale-header">
+        Sign in
+      </div>
+    </div>
+
+    <div data-role="content" data-theme="c">
+      <br>
+
+      <div><img class="page-center" src="img/Gbuttonx2.png" id=
+      "login_with_google"></div>
+
+      <div>
+        <p class="page-center text-center">
+        ----------Or----------</p>
+      </div>
+
+      <div class="textfield-80">
+        <input type="text" maxlength="20" id="email" value=
+        "Email address">
+      </div>
+
+      <div class="textfield-80">
+        <input type="text" maxlength="20" id="password" value=
+        "Password">
+      </div>
+
+      <div class="textfield-80 small-font">
+        <a href="#" id="forgot_password">Forgot your password?</a>
+      </div>
+
+      <div class="button-style-large">
+        <button data-corners="false" data-theme="a" id=
+        "native_log_in">Sign in</button>
+      </div>
+
+      <div class="button-style-large">
+        <button data-corners="false" id="create_account">Create
+        Account</button>
+      </div>
+
+      <table class="payment-table">
+        <tr>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PAYMENT SELECTOR PAGE -->
+  <div data-role="page" id="payment-selector-page" data-theme="c">
+    <div data-role="header" data-theme="b" id="header">
+      <div id="login-widget">
+        <ul id="menu-left" data-role="menu">
+          <li>#if(!$email) <span data-role="button" onclick=
+          "Xyz.App.login()">Login</span> #else <span data-role="button"
+          data-icon="arrow-d" data-iconpos=
+          "left">$truncEmail</span>
+
+            <ul data-role="listview" data-inset="true">
+              <li data-icon="false" onclick="Xyz.App.logout()" class=
+              "logout"><a href="#" class="logout-button"></a> Sign
+              out</li>
+            </ul>#end
+          </li>
+        </ul>
+      </div>
+
+      <div class="center">
+        <span class="title">XYZ, Inc.</span>
+      </div>
+    </div>
+
+    <div data-role="header" data-theme="y" id="header2">
+      <div class="sale-header">
+        Pay with
+      </div>
+    </div>
+
+    <div data-role="content" data-theme="c">
+      <img src="img/Wallet_horizontal_logo.png"> <button class=
+      "button-style-large" id=
+      "change_payment_confirm">Edit</button>
+      <hr>
+      <label>Credit or debit card</label> <input type="tel" id=
+      "ccNumber" placeholder="Card number">
+
+      <table>
+        <tr>
+          <td><label>Expiration date</label> <input type="text" id=
+          "ccExp" maxlength="5" placeholder="MM/YY"></td>
+
+          <td><label>Security code</label> <input type="text" id=
+          "cvc" maxlength="4" placeholder="CVC"></td>
+        </tr>
+      </table><label>Billing Address</label> <input type="text" id=
+      "address_receipient" placeholder="Contact name"> <input type=
+      "text" id="address_address_line_1" placeholder=
+      "Street address"> <input type="text" id=
+      "address_address_line_2" placeholder="">
+
+      <table>
+        <tr>
+          <td><input type="text" maxlength="20" id=
+          "address_locality" placeholder="City"></td>
+
+          <td><select id="address-ADMIN_AREA">
+            <option value="AL">
+              Alabama
+            </option>
+
+            <option value="AK">
+              Alaska
+            </option>
+
+            <option value="AS">
+              American Samoa
+            </option>
+
+            <option value="AZ">
+              Arizona
+            </option>
+
+            <option value="AR">
+              Arkansas
+            </option>
+
+            <option value="AA">
+              Armed Forces (AA)
+            </option>
+
+            <option value="AE">
+              Armed Forces (AE)
+            </option>
+
+            <option value="AP">
+              Armed Forces (AP)
+            </option>
+
+            <option value="CA">
+              California
+            </option>
+
+            <option value="CO">
+              Colorado
+            </option>
+
+            <option value="CT">
+              Connecticut
+            </option>
+
+            <option value="DE">
+              Delaware
+            </option>
+
+            <option value="DC">
+              District Of Columbia
+            </option>
+
+            <option value="FL">
+              Florida
+            </option>
+
+            <option value="GA">
+              Georgia
+            </option>
+
+            <option value="GU">
+              Guam
+            </option>
+
+            <option value="HI">
+              Hawaii
+            </option>
+
+            <option value="ID">
+              Idaho
+            </option>
+
+            <option value="IL">
+              Illinois
+            </option>
+
+            <option value="IN">
+              Indiana
+            </option>
+
+            <option value="IA">
+              Iowa
+            </option>
+
+            <option value="KS">
+              Kansas
+            </option>
+
+            <option value="KY">
+              Kentucky
+            </option>
+
+            <option value="LA">
+              Louisiana
+            </option>
+
+            <option value="ME">
+              Maine
+            </option>
+
+            <option value="MH">
+              Marshall Islands
+            </option>
+
+            <option value="MD">
+              Maryland
+            </option>
+
+            <option value="MA">
+              Massachusetts
+            </option>
+
+            <option value="MI">
+              Michigan
+            </option>
+
+            <option value="FM">
+              Micronesia
+            </option>
+
+            <option value="MN">
+              Minnesota
+            </option>
+
+            <option value="MS">
+              Mississippi
+            </option>
+
+            <option value="MO">
+              Missouri
+            </option>
+
+            <option value="MT">
+              Montana
+            </option>
+
+            <option value="NE">
+              Nebraska
+            </option>
+
+            <option value="NV">
+              Nevada
+            </option>
+
+            <option value="NH">
+              New Hampshire
+            </option>
+
+            <option value="NJ">
+              New Jersey
+            </option>
+
+            <option value="NM">
+              New Mexico
+            </option>
+
+            <option value="NY">
+              New York
+            </option>
+
+            <option value="NC">
+              North Carolina
+            </option>
+
+            <option value="ND">
+              North Dakota
+            </option>
+
+            <option value="MP">
+              Northern Mariana Islands
+            </option>
+
+            <option value="OH">
+              Ohio
+            </option>
+
+            <option value="OK">
+              Oklahoma
+            </option>
+
+            <option value="OR">
+              Oregon
+            </option>
+
+            <option value="PW">
+              Palau
+            </option>
+
+            <option value="PA">
+              Pennsylvania
+            </option>
+
+            <option value="PR">
+              Puerto Rico
+            </option>
+
+            <option value="RI">
+              Rhode Island
+            </option>
+
+            <option value="SC">
+              South Carolina
+            </option>
+
+            <option value="SD">
+              South Dakota
+            </option>
+
+            <option value="TN">
+              Tennessee
+            </option>
+
+            <option value="TX">
+              Texas
+            </option>
+
+            <option value="UT">
+              Utah
+            </option>
+
+            <option value="VT">
+              Vermont
+            </option>
+
+            <option value="VI">
+              Virgin Islands
+            </option>
+
+            <option value="VA">
+              Virginia
+            </option>
+
+            <option value="WA">
+              Washington
+            </option>
+
+            <option value="WV">
+              West Virginia
+            </option>
+
+            <option value="WI">
+              Wisconsin
+            </option>
+
+            <option value="WY">
+              Wyoming
+            </option>
+          </select></td>
+
+          <td><input type="text" maxlength="5" id=
+          "address-POSTAL_CODE" placeholder="Zip"></td>
+        </tr>
+      </table><button><a href="#confirmation-page" data-transition=
+      "slide">Save</a></button>
+    </div>
+  </div>
+
+  <!-- RECEIPT PAGE -->
+  <div data-role="page" id="receipt" data-theme="c">
+    <div data-role="header" data-theme="b" id="header">
+      <div id="login-widget">
+        <ul id="menu-left" data-role="menu">
+          <li>#if(!$email) <span data-role="button" onclick=
+          "Xyz.App.login()">Login</span> #else <span data-role="button"
+          data-icon="arrow-d" data-iconpos=
+          "left">$truncEmail</span>
+
+            <ul data-role="listview" data-inset="true">
+              <li data-icon="false" onclick="Xyz.App.logout()" class=
+              "logout"><a href="#" class="logout-button"></a> Sign
+              out</li>
+            </ul>#end
+          </li>
+        </ul>
+      </div>
+
+      <div class="center">
+        <span class="title">XYZ, Inc.</span>
+      </div>
+    </div>
+
+    <div data-role="header" data-theme="y" id="header2">
+      <div class="sale-header">
+        Thanks for shopping at XYZ, inc
+      </div>
+    </div>
+
+    <div data-role="content" data-theme="c">
+      <div id="receipt-content">
+        <!-- Receipt information generated and inserted here -->
+      </div>
+
+      <div class="button-style-large">
+        <button id="receipt_continue_shopping" data-theme="a"
+        data-corners="false">Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="js/underscore_do_not_compile.js"></script>
+  <script type="text/javascript" src="js/backbone_do_not_compile.js"></script>
+  <script type="text/javascript" src="js/models.js"></script>
+  <script type="text/javascript" src="js/cookies.js"></script>
+  <script type="text/javascript" src="js/sso.js"></script>
+  <script type="text/javascript" src="js/view.js"></script>
+  <script type="text/javascript" src="js/wallet.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="https://apis.google.com/js/client.js" ></script>
+</body>
+</html>
