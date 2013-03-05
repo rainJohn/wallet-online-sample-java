@@ -35,7 +35,8 @@ public enum Config {
       "https://wallet-web.sandbox.google.com/online/v2/merchant/merchant.js"),
   PRODUCTION(System.getProperty("production_merchant_id"),
       System.getProperty("production_merchant_auth_key"),
-      "https://wallet.google.com/online/v2/merchant/merchant.js");
+      "https://wallet.google.com/online/v2/merchant/merchant.js"),
+  UNKNOWN("", "", "");
 
   private final String id;
   private final String key;
@@ -50,6 +51,19 @@ public enum Config {
     if (System.getProperty("online_wallet_enviroment") != null) {
       env = Config.valueOf(System.getProperty("online_wallet_enviroment"));
     }
+  }
+
+  public static Config getEnvironment() {
+    return environment;
+  }
+
+  public static Config getEnvironment(String string) {
+    Config environment = UNKNOWN;
+    try {
+      environment = Config.valueOf(string.toUpperCase());
+    } catch (IllegalArgumentException e) {
+    }
+    return environment;
   }
 
   Config(String id, String key, String url) {
@@ -94,13 +108,15 @@ public enum Config {
    * @return request protocol://domain:port
    */
   public static String getDomain(HttpServletRequest req) {
-    String domain = req.getServerName();
-    String protocol = req.getScheme();
     String port = Integer.toString(req.getServerPort());
-    String origin = protocol + "://" + domain;
+    String origin = req.getScheme() + "://" + req.getServerName();
     if (!(port.equals("80") || port.equals("443"))) {
       origin += ":" + port;
     }
     return origin;
   }
-}
+
+  public static WalletOnlineService makeWalletOnlineServices() {
+    return new WalletOnlineService(Config.getEnvironment().getMerchantId(),
+        Config.getEnvironment().getMerchantSecret());
+  }}

@@ -23,7 +23,6 @@ import java.util.Collection;
  *
  * This object contains payment instrument data
  *
- * @author pying
  *
  */
 public class Pay {

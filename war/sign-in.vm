@@ -1,0 +1,44 @@
+    <div class="ui-content ui-body-c">
+      <br>
+
+      <div onclick="Xyz.Sso.login(function() {window.location = 'order'});">
+        <img class="page-center" src="/img/Gbuttonx2.png" id="login_with_google">
+      </div>
+
+      <div>
+        <p class="page-center text-center">
+        ----------Or----------</p>
+      </div>
+
+      <div class="textfield-80">
+        <input type="text" maxlength="20" id="email" value="Email address" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset">
+      </div>
+
+      <div class="textfield-80">
+        <input type="text" maxlength="20" id="password" value="Password" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset">
+      </div>
+
+      <div class="textfield-80 small-font">
+        <a href="#" id="forgot_password" class="ui-link">Forgot your password?</a>
+      </div>
+
+      <div class="button-style-large">
+        <div class="ui-btn ui-shadow ui-btn-up-a" aria-disabled="false">
+          <span class="ui-btn-inner" onclick="alert('Sample button, not implemented');">
+            <span class="ui-btn-text">Sign in</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="button-style-large">
+        <div class="ui-btn ui-shadow ui-btn-up-c" aria-disabled="false">
+          <span class="ui-btn-inner" onclick="alert('Sample button, not implemented');">
+            <span class="ui-btn-text">Create Account</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Form used to return to the order page -->
+      <form id="purchaseDetailsForm" name="purchaseDetailsForm" action="order" method="post">
+      </form>
+    </div>

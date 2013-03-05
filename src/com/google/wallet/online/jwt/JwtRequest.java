@@ -30,7 +30,6 @@ import java.util.Map;
  * Defines a few fields that are commonly required origin, google_transaction_id
  * and transaction_id
  *
- * @author pying(peng ying)
  *
  */
 public class JwtRequest extends Jwt {

@@ -1,12 +1,9 @@
-   <div id="header2" class="ui-header ui-bar-y">
-      <div class="sale-header">Complete your purchase</div>
-    </div>
     <div id="order-content">
       <p class="content-indent">Shopping Cart</p>
       <table class="content-indent fill-100 small-font"><tbody>
       <tr>
         <td class="fill-30">
-          <img class="fill-100" id="camera_img" src="$itemImage">
+          <img class="fill-100" id="camera_img" src="/$itemImage">
         </td>
         <td class="fill-40">
           <label class="content-indent">Quantity $itemQuantity</label>
@@ -46,13 +43,25 @@
     <hr />
     <div class="wallet-button-container">
       <div id="buybutton">
-        <div id="gWalletDiv">
-          <g:wallet jwt=$mwr success="successMaskedWallet"
-            failure="failureMaskedWallet"></g:wallet>
+        <div id="gWalletDiv" onclick="jQuery('#pageLoadingSpinner').show();">
+          #if ($buttonInForm)
+          <!-- Form used to finish the purchase flow by posting makedWallet Response to the server -->
+          <form id="purchaseDetailsForm" name="purchaseDetailsForm" action="confirm" method="post">
+          #end
+          #if(!$createWalletButtonFunction)
+            <g:wallet jwt="$maskedWalletJwt" success="requestMaskedWalletSuccessCallback"
+              failure="requestMaskedWalletFailureCallback">
+            </g:wallet>
+          #end
+          #if ($buttonInForm)
+            <input type="hidden" name="maskedWallet" id="maskedWallet">
+          </form>
+          #end
         </div>
       </div>
       <div class="order-detail-buttons">
-        <div id="continue-checkout" class="ui-btn ui-shadow ui-mini ui-btn-hover-a ui-btn-down-a" aria-disabled="false">
+        <div id="continue-checkout" onclick="continueToCheckout();"
+          class="ui-btn ui-shadow ui-mini ui-btn-hover-a ui-btn-down-a" aria-disabled="false">
           <span class="ui-btn-inner"><span class="ui-btn-text">Continue Checkout</span></span>
         </div>
         <div class="ui-btn ui-shadow ui-mini ui-btn-up-c" aria-disabled="false">
@@ -60,52 +69,80 @@
         </div>
       </div>
     </div>
+    <div class="content-indent">
+      <form id="orderForm" name="orderForm" action="order" method="post">
+        <input type="hidden" name="itemId" id="itemId" value="$itemId">
+        <input type="hidden" name="quantity" id="quantity" value="$itemQuantity">
+        <p>JWT Type:<select id="jwttype" name="jwttype">
+          <option value="valid"$!valid>Valid</option>
+          <option value="evil"$!evil>Wrong Origin</option>
+          <option value="expired"$!expired>Expired</option>
+          <option value="failure"$!failure>Invalid JWT</option>
+          <option value="no_origin"$!no_origin>No Origin</option>
+        </select></p>
+        <p>
+          <input type="submit" value="Create new JWT">
+        </p>
+      </form>
+    </div>
     <pre id="masked-request-jwt" class="jwtContent">$outputString</pre>
+    #if (!$buttonInForm)
     <!-- Form used to finish the purchase flow by posting makedWallet Response to the server -->
-    <form id="purchaseDetailsForm" name="purchaseDetailsForm"
-      action="/confirm" method="post">
+    <form id="purchaseDetailsForm" name="purchaseDetailsForm" action="confirm" method="post">
       <input type="hidden" name="maskedWallet" id="maskedWallet">
-      <input type="hidden" name="changeJwt" id="changeJwt">
-      <input type="hidden" name="itemId" id="itemId" value="$itemId">
-      <input type="hidden" name="quantity" id="quantity" value="$itemQuantity">
     </form>
+    #end
   </div>
   <script type="text/javascript">
-
+    #if($createWalletButtonFunction)
+    /**
+     * Create the google wallet button using the api function.
+     */
+    google.wallet.online.createWalletButton({
+      jwt: "$maskedWalletJwt",
+      success: requestMaskedWalletSuccessCallback,
+      failure: requestMaskedWalletFailureCallback,
+      ready: walletButtonReady
+    });
+    function walletButtonReady(params){
+      if (params.status == "SUCCESS") {
+        jQuery(function() {
+          //make sure the DOM is ready before adding the wallet button.
+          jQuery("#gWalletDiv").append(params.walletButtonElement);
+        });
+      }
+    }
+    #end
     /**
      * Continue Checkout button logic. Request Masked Wallet should be tied to
      * your continue checkout button. This allows you to get the
      * maskedWalletRequest for pre-authorized users with out any user interaction.
-     *
-     * @param {String}
-     *  oauthToken accessToken of preauthorized users
      */
-    function requestMaskedWallet() {
-      if (!window.Xyz.Wallet.accessToken){
-        window.alert("Merchant's payment-card entry screen goes here.");
+    function continueToCheckout() {
+      if (!Xyz.Cookie.getAccessToken()) {
+        // carry on with normal checkout flow.
+        window.location = 'signin';
         return;
       }
-      jQuery("#pageLoadingSpinner").show();
+      // use google wallet because the user has pre-authed it.
+      jQuery('#pageLoadingSpinner').show();
       google.wallet.online.requestMaskedWallet({
-        jwt : "$mwr",
-        success : successMaskedWallet,
-        failure : failureMaskedWallet,
-        token : window.Xyz.Wallet.accessToken
+        jwt: "$maskedWalletJwt",
+        success: requestMaskedWalletSuccessCallback,
+        failure: requestMaskedWalletFailureCallback
       });
-    };
+    }
 
     /**
      * Masked Wallet success handler. This function handles masked wallet jwt and POST's the
      * information to the server.
      *
-     * @param {Object}
-     *          param The Masked Wallet Response object
+     * @param {Object} param The Masked Wallet Response object.
      */
-    function successMaskedWallet(param) {
-      jQuery("#maskedWallet").val(param.jwt);
-      jQuery("#changeJwt").val("$mwr");
-      document.forms["purchaseDetailsForm"].submit();
-    };
+    function requestMaskedWalletSuccessCallback(param) {
+      jQuery('#maskedWallet').val(param.jwt);
+      jQuery('#purchaseDetailsForm').submit();
+    }
 
     /**
      * Masked Wallet Request failure handler. You should implement your
@@ -114,27 +151,11 @@
      * @param {Object}
      *          param Defines the code and details of why the request failed
      */
-    function failureMaskedWallet(param) {
-      jQuery("#pageLoadingSpinner").hide();
-      alert("error: " + param.error + ", details: " + param.details);
-      console.log("masked wallet failure callback called" + param.error + ", details: "
-        + param.details);
-    };
+    function requestMaskedWalletFailureCallback(param) {
+      jQuery('#pageLoadingSpinner').hide();
+      alert('error: ' + param.error + ', details: ' + param.details);
+      console.log('masked wallet failure callback called' + param.error +
+        ', details: ' + param.details);
+    }
+</script>
 
-    /**
-     * Check if Wallet is a preauthed method of payment. If Wallet is preauthed
-     * store the access token associated for future use.
-     */
-    function init() {
-      window.Xyz.Wallet.checkAuth();
-
-      // Attaches click handlers to show spinner for the Wallet Button
-      document.getElementById("gWalletDiv").addEventListener("click",
-          function() {
-            jQuery("#pageLoadingSpinner").show();
-          });
-      document.getElementById("continue-checkout").addEventListener("click",requestMaskedWallet);
-    };
-    // Initiate the authorization process and add click handlers whenever the page is loaded.
-    window.onload = init;
-  </script>

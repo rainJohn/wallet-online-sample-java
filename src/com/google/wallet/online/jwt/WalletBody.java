@@ -19,7 +19,6 @@ package com.google.wallet.online.jwt;
 /**
  * Bean to represent the request/response body
  *
- * @author pying
  *
  */
 public class WalletBody {
@@ -33,8 +32,7 @@ public class WalletBody {
   private Pay pay;
   private Ship ship;
   private Boolean phoneNumberRequired;
-  private Boolean shippingRequired;
-
+  private Boolean useMinimalAddresses;
 
   public WalletBody() {
     //Empty constructor used in gson conversion of JSON -> Java Objects
@@ -47,14 +45,14 @@ public class WalletBody {
     setOrigin(o);
     setPay(p);
     setShip(s);
-    setPhoneNumberRequired(false);
+    setPhoneNumberRequired(true);
   }
 
   public WalletBody(String ci, String mn, String o) {
     setClientId(ci);
     setMerchantName(mn);
     setOrigin(o);
-    setPhoneNumberRequired(false);
+    setPhoneNumberRequired(true);
   }
 
   public WalletBody(String ci, String mn, String o, Pay p, Ship s) {
@@ -63,7 +61,7 @@ public class WalletBody {
     setOrigin(o);
     setPay(p);
     setShip(s);
-    setPhoneNumberRequired(false);
+    setPhoneNumberRequired(true);
   }
 
   public String getEmail() {
@@ -131,26 +129,26 @@ public class WalletBody {
   }
 
   public Boolean getPhoneNumberRequired() {
-    return phoneNumberRequired;
+    return phoneNumberRequired == null ? true : phoneNumberRequired;
   }
 
   public void setPhoneNumberRequired(Boolean phoneNumberRequired) {
     this.phoneNumberRequired = phoneNumberRequired;
   }
-  
+
+  public Boolean getUseMinimalAddresses() {
+    return useMinimalAddresses;
+  }
+
+  public void setUseMinimalAddresses(Boolean useMinimalAddresses) {
+    this.useMinimalAddresses = useMinimalAddresses;
+  }
+
   public String getMerchantTransactionId() {
     return merchantTransactionId;
   }
 
   public void setMerchantTransactionId(String merchantTransactionId) {
     this.merchantTransactionId = merchantTransactionId;
-  }
-
-  public Boolean getShippingRequired() {
-    return shippingRequired;
-  }
-
-  public void setShippingRequired(Boolean shippingRequired) {
-    this.shippingRequired = shippingRequired;
   }
 }

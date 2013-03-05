@@ -3,7 +3,6 @@
  * on the page, initializes views, variables and cookies, and makes AJAX
  * requests to the server for the JWTs.
  *
- * @author pying(Peng Ying)
  */
 
 var Xyz = Xyz || {};
@@ -192,38 +191,34 @@ var Xyz = Xyz || {};
    * Attaches click handlers to actionable HTML elements not handled by views
    */
   function initActions() {
-    document.getElementById('add_to_cart').addEventListener('click', addToCart);
-    document.getElementById('continue_shopping').addEventListener('click',
-      function() {
+    $('#add_to_cart').on('click', addToCart);
+    $('#continue_shopping').on('click', function() {
       $.mobile.changePage('#item-selection', {
         transition: 'slide'
       });
     });
-    document.getElementById('receipt_continue_shopping')
-      .addEventListener('click', function() {
+    $('#receipt_continue_shopping').on('click', function() {
       $.mobile.changePage('#item-selection', {
         transition: 'slide'
       });
     });
-    document.getElementById('continue_checkout')
-      .addEventListener('click', Xyz.Wallet.requestMaskedWallet);
-    document.getElementById('change_shipping')
-      .addEventListener('click', Xyz.Wallet.changeMaskedWallet);
-    document.getElementById('change_payment_confirm')
-      .addEventListener('click', Xyz.Wallet.changeMaskedWallet);
-    document.getElementById('place_order')
-      .addEventListener('click', Xyz.Wallet.requestFullWallet);
-    document.getElementById('login_with_google')
-      .addEventListener('click', Xyz.Sso.loginWithGoogle);
-    document.getElementById('change_payment')
-      .addEventListener('click', function() {
+    $('#continue_checkout').on('click', Xyz.Wallet.requestMaskedWallet);
+    $('#change_shipping').on('click', Xyz.Wallet.changeMaskedWallet);
+    $('#change_payment_confirm').on('click', Xyz.Wallet.changeMaskedWallet);
+    $('#place_order').on('click', Xyz.Wallet.requestFullWallet);
+    $('#login_with_google').on('click', function() {
+        Xyz.Sso.login(function() {
+          //continue to checkout?
+          $.mobile.changePage('#confirmation-page', {
+            transition: 'slide'
+          });
+        });
+      });
+    $('#change_payment').on('click', function() {
         $.mobile.changePage('#payment-selector-page')});
-    document.getElementById('native_log_in')
-      .addEventListener('click', notImplemented);
-    document.getElementById('forgot_password')
-      .addEventListener('click', notImplemented);
-    document.getElementById('create_account')
-      .addEventListener('click', notImplemented);
+    $('#native_log_in').on('click', notImplemented);
+    $('#forgot_password').on('click', notImplemented);
+    $('#create_account').on('click', notImplemented);
   }
 
   /**

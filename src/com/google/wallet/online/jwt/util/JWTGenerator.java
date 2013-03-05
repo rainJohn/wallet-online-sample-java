@@ -33,7 +33,6 @@ import java.util.Map;
 /**
  * Helper class to convert Java Objects representations to JSON Web Tokens
  *
- * @author pying(Peng Ying)
  *
  */
 public class JWTGenerator {

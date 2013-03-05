@@ -23,7 +23,6 @@ import net.oauth.jsontoken.JsonToken;
 /**
  * Base class for Payment Express Json Web Token request responses.
  *
- * @author pying(peng ying)
  *
  */
 public class JwtResponse extends Jwt {

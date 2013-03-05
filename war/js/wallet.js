@@ -3,7 +3,6 @@
  * Google Wallet functionality. It requires cookies.js as many of the parameters
  * are stored in cookies to try to be as server agnostic as possible.
  *
- * @author pying(Peng Ying)
  */
 
 // Create Xyz namespace if it's hasn't already been created
@@ -24,14 +23,6 @@ var Xyz = Xyz || {};
   wallet.MWR_URL = 'mwr';
 
   /**
-   * Get previously stored accessToken from cookies
-   * The accessToken is stored in a cookie so we can allow users to persist
-   * their Wallet pre-authorization
-   * @type {string}
-   */
-  wallet.accessToken = Xyz.Cookie.getAccessToken();
-
-  /**
    * Google Transaction Id
    * @type {string}
    */
@@ -43,9 +34,16 @@ var Xyz = Xyz || {};
    */
   wallet.changeJwt = Xyz.Cookie.getChangeJwt();
 
-  // Set accessToken to enable preauth flow
-  if (wallet.accessToken)
-    google.wallet.online.setAccessToken(wallet.accessToken);
+  /**
+   * Get previously stored accessToken from cookies
+   * The accessToken is stored in a cookie so we can allow users to persist
+   * their Wallet authorization.
+   */
+  $(function() {
+    accessToken = Xyz.Cookie.getAccessToken();
+    google.wallet.online.setAccessToken(accessToken);
+    wallet.checkAuth();
+  });
 
   /**
    * Helper function to generate the post body that's posted to the server to
@@ -83,8 +81,6 @@ var Xyz = Xyz || {};
    * automatically sets the Wallet access token so we don't need to do that here
    */
   wallet.checkAuth = function() {
-    // TODO(pying):Work with SSO team to figure out best way to check multiple
-    // scopes
     google.wallet.online.authorize({
         // using the global OAuth2 client id
         'clientId' : clientId,
@@ -93,9 +89,10 @@ var Xyz = Xyz || {};
           // parameter
           // If it's not null the access token will be passed
           if (param) {
-            wallet.accessToken = param.access_token;
             // Persist our access token setting in a cookie
-            Xyz.Cookie.setAccessToken(wallet.accessToken, param.expires_in);
+            Xyz.Cookie.setAccessToken(param.access_token, param.expires_in);
+          }else {
+            Xyz.Cookie.setAccessToken('', 1);
           }
         }
     });
@@ -213,7 +210,7 @@ var Xyz = Xyz || {};
    *
    */
   wallet.requestMaskedWallet = function() {
-    if (wallet.accessToken) {
+    if (Xyz.Cookie.getAccessToken()) {
       $.mobile.showPageLoadingMsg('a', 'loading', false);
 
       $.post(wallet.MWR_URL, wallet.itemToPostBody(), function(jwt) {

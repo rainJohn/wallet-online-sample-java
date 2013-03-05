@@ -35,7 +35,6 @@ import java.util.List;
 /**
  * This service converts between JWT string and Java object and vice versa
  *
- * @author pying
  *
  */
 public class WalletOnlineService {

@@ -1,49 +1,50 @@
 package com.google.pvacameras.server.multi;
 
-import com.google.pvacameras.server.config.Config;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.wallet.online.jwt.JwtRequest;
 import com.google.wallet.online.jwt.JwtResponse;
 import com.google.wallet.online.jwt.TransactionStatusBody;
-import com.google.wallet.online.jwt.util.WalletOnlineService;
 
 import org.apache.velocity.VelocityContext;
 
 import java.security.InvalidKeyException;
 import java.security.SignatureException;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * Handles the Full Wallet Response JWT, renders the receipt and generates the transaction status
  * notification JWT.
  */
-public class ReceiptServlet extends HttpServlet {
+public class ReceiptPage {
 
-  @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse resp) {
-    doPost(req, resp); // Get handler forwards request to post handler.
-  }
-
-  @Override
-  public void doPost(HttpServletRequest req, HttpServletResponse resp) {
-
-    VelocityHelper page = new VelocityHelper(req, resp);
-    page.header();
+  public void handleRequest(VelocityHelper page) {
+    page.header("Thanks for shopping at XYZ, inc")
+        .showLogin(true)
+        .showCart(false)
+        .writeHeader();
 
     VelocityContext context = new VelocityContext();
 
-    WalletOnlineService ows =
-        new WalletOnlineService(Config.getMerchantId(), Config.getMerchantSecret());
     JwtResponse fwrResponse = null;
     String gid = null;
-    String fullWalletJwt = req.getParameter("fullWallet");
+
+
+    String fullWalletJwt = page.getParameter("fullWallet");
     if (fullWalletJwt != null) {
       try {
         // parse the FullWallet Response into JwtResponse object.
-        fwrResponse = ows.jwtToJava(fullWalletJwt);
+        fwrResponse = page.makeWalletOnlineServices().jwtToJava(fullWalletJwt);
         gid = fwrResponse.getResponse().getGoogleTransactionId();
+        String pan = page.getParameter("pan");
+        String cvn = page.getParameter("cvn");
+        // Process payment here using pan,cvn and billing address from fwrResponse
+
+        // Publish the fullWalletJwt pan and cvn back to the reciept page.
+        // You wouldn't do this normally but its nice to see it during development
+        Gson prettyPrintingGson = new GsonBuilder().setPrettyPrinting().create();
+        context.put("fullWalletJwt", prettyPrintingGson.toJson(fwrResponse.getResponse()));
+        context.put("pan", pan);
+        context.put("cvn", cvn);
       } catch (InvalidKeyException e) {
         e.printStackTrace();
         return;
@@ -55,7 +56,7 @@ public class ReceiptServlet extends HttpServlet {
         new TransactionStatusBody(gid, TransactionStatusBody.Status.SUCCESS);
     JwtRequest tsn = new JwtRequest(JwtRequest.Type.TRANSACTION_STATUS, tsb);
     try {
-      context.put("notificationJwt", ows.javaToJwt(tsn));
+      context.put("notificationJwt", page.makeWalletOnlineServices().javaToJwt(tsn));
     } catch (InvalidKeyException e) {
       e.printStackTrace();
     } catch (SignatureException e) {
@@ -63,7 +64,7 @@ public class ReceiptServlet extends HttpServlet {
     }
 
     // Injects the receipt information.
-    String subtotal = req.getParameter("subtotal");
+    String subtotal = page.getParameter("subtotal");
     if (subtotal == null){
       subtotal = "0";
     }

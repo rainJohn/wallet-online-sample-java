@@ -4,8 +4,9 @@
     <span class="ui-icon ui-icon-loading"></span>
     <h1>loading</h1>
   </div>
-  <script type="text/javascript" src="js/cookies.js"></script>
-  <script type="text/javascript" src="js/wallet.js"></script>
+  <script type="text/javascript" src="/js/cookies.js"></script>
+  <script type="text/javascript" src="/js/wallet.js"></script>
+  <script type="text/javascript" src="/js/sso.js"></script>
   <script type="text/javascript">
   jQuery("#fullpage").css('min-height',jQuery(window).height());
   </script>

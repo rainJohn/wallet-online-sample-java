@@ -3,7 +3,6 @@
  * cookie functionality. It provides functions to restore cookie object in
  * different formats and get cookie objects in corresponding types.
  *
- * @author gpeng(Guang-Hong Peng)
  */
 var Xyz = Xyz || {};
 
@@ -57,11 +56,13 @@ var Xyz = Xyz || {};
    *        accessToken Acquired accessToken after buyers complete the
    *        OAuth authorization.
    * @param {String}
-   *        exp Expiration time for the accessToken.
+   *        exp Expiration time for the accessToken in minutes from now.
    */
-  cookie.setAccessToken = function(accessToken, exp) {
+  cookie.setAccessToken = function(accessToken, expirationMinutes) {
     //sync the expiration time between the cookie object and the accessToken
-    $.cookie('accessToken', accessToken, {expires: exp});
+    var expiryDate = new Date();
+    expiryDate.setTime(expiryDate.getTime() + (expirationMinutes * 60 * 1000));
+    $.cookie('accessToken', accessToken, {expires: expiryDate});
   };
   /**
    * Getter for OAuth2 access_token

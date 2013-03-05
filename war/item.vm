@@ -1,9 +1,3 @@
-    <div role="banner" class="ui-header ui-bar-y" id="header2">
-      <div class="sale-header">
-        Camera
-      </div>
-    </div>
-
     <div role="main" class="ui-content" id="camera-content">
     <p class="content-indent" id="camera_name">Camera XY000</p>
     <div>
@@ -11,7 +5,7 @@
       <tbody>
         <tr>
           <td class="fill-60">
-            <img class="fill-100" id="camera_img" src="$itemImage">
+            <img class="fill-100" id="camera_img" src="/$itemImage">
           </td>
           <td class="fill-40"><label class="drop-padding-match">Quantity</label>
             <div class="ui-select">
@@ -20,9 +14,12 @@
                   <span class="ui-btn-text"><span>1</span></span>
                   <span class="ui-icon ui-icon-arrow-d ui-icon-shadow">&nbsp;</span>
                 </span>
-                <select>
-                  <option value="standard">$itemQuantity</option>
-                </select>
+                <form id="orderForm" name="orderForm" action="order" method="post">
+                  <select name="quantity">
+                    <option value="standard">$itemQuantity</option>
+                  </select>
+                  <input type="hidden" name="itemId" value="$itemId">
+                </form>
               </div>
             </div><br>
             <span class="drop-padding-match">$$itemPrice</span>
@@ -35,11 +32,9 @@
 
     <div class="button-style-large">
       <div class="ui-btn ui-btn-up-a ui-shadow">
-        <a href="/order?itemId=$itemId">
-          <span class="ui-btn-inner">
-            <span class="ui-btn-text">Add to cart</span>
-          </span>
-        </a>
+        <span onclick="document.forms['orderForm'].submit();" class="ui-btn-inner">
+          <span class="ui-btn-text">Add to cart</span>
+        </span>
       </div>
     </div>
 

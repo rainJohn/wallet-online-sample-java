@@ -68,7 +68,7 @@ public class HomeServlet extends HttpServlet {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    //TODO(pying): Move stored info to browser cookies
+    //TODO(user): Move stored info to browser cookies
     HttpSession session = req.getSession();
     String name = (String) session.getAttribute("name");
     String email = (String) session.getAttribute("email");
@@ -83,7 +83,8 @@ public class HomeServlet extends HttpServlet {
 
     VelocityContext context = new VelocityContext();
 
-    context.put("walletJSUrl", Config.getJsUrl());
+    context.put("walletJSUrl", Config.getEnvironment().isLocal() ? Config.getDevJsUrl(req)
+        : Config.getEnvironment().getJsUrl());
     context.put("clientId", Config.OAUTH_CLIENT_ID);
     context.put("apiKey", Config.OAUTH_API_KEY);
 

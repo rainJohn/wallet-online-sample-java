@@ -2,7 +2,6 @@
  * This file contains the Backbone models that are used to represent different
  * objects in the web app.
  *
- * @author pying@google.com(peng ying)
  */
 
 /**

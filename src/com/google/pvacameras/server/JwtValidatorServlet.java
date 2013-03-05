@@ -18,7 +18,6 @@ package com.google.pvacameras.server;
 
 import com.google.pvacameras.server.config.Config;
 import com.google.wallet.online.jwt.JwtResponse;
-import com.google.wallet.online.jwt.util.WalletOnlineService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,7 +38,7 @@ public class JwtValidatorServlet extends HttpServlet {
     doPost(req, resp);
   }
 
-  /**  
+  /**
    * The following parameters are parsed:
    *
    * jwt - the jwt to validate
@@ -54,14 +53,12 @@ public class JwtValidatorServlet extends HttpServlet {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    WalletOnlineService ows = new WalletOnlineService(Config.getMerchantId(), 
-        Config.getMerchantSecret());
 
     try {
-      JwtResponse javaJwt = ows.jwtToJava(jwt);
+      JwtResponse javaJwt = Config.makeWalletOnlineServices().jwtToJava(jwt);
       pw.write("true");
     } catch (InvalidKeyException e) {
-      pw.write("false");   
+      pw.write("false");
     }
   }
 }

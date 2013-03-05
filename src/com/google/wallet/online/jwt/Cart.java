@@ -21,7 +21,6 @@ import java.util.ArrayList;
 /**
  * Bean to represent the cart of items purchased
  *
- * @author pying(peng ying)
  *
  */
 public class Cart {

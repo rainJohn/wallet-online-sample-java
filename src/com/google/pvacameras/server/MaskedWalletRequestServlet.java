@@ -21,7 +21,6 @@ import com.google.wallet.online.jwt.JwtRequest;
 import com.google.wallet.online.jwt.Pay;
 import com.google.wallet.online.jwt.Ship;
 import com.google.wallet.online.jwt.WalletBody;
-import com.google.wallet.online.jwt.util.WalletOnlineService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,7 +41,7 @@ public class MaskedWalletRequestServlet extends HttpServlet {
   public void doGet(HttpServletRequest req, HttpServletResponse resp) {
     doPost(req, resp);
   }
- 
+
   /**
    * The following parameters are parsed:
    *
@@ -56,29 +55,31 @@ public class MaskedWalletRequestServlet extends HttpServlet {
   public void doPost(HttpServletRequest req, HttpServletResponse resp) {
     // Get request domain
     String origin = Config.getDomain(req);
-   
+
     String googleId = req.getParameter("gid");
-    Boolean phoneNumberRequired = new Boolean(req.getParameter("pnr"));
-    
+    boolean phoneNumberRequired = Boolean.parseBoolean(req.getParameter("pnr"));
+    boolean useMinimalAddresses = Boolean.parseBoolean(req.getParameter("min"));
+    String total = getParameterOrDefault(req, "total", "0");
+    String currency = getParameterOrDefault(req, "currency", "USD");
     // Create MaskedWalletRequest JWT
     WalletBody mwb = new WalletBody(Config.OAUTH_CLIENT_ID, Config.MERCHANT_NAME, origin,
-        new Pay(req.getParameter("total"), req.getParameter("currency")), new Ship());
+        new Pay(total, currency), new Ship());
     if (googleId != null && googleId.length() > 0) {
       mwb.setGoogleTransactionId(req.getParameter("gid"));
     }
     if (phoneNumberRequired) {
       mwb.setPhoneNumberRequired(true);
     }
+    if (useMinimalAddresses) {
+      mwb.setUseMinimalAddresses(true);
+    }
     JwtRequest mwr = new JwtRequest(JwtRequest.Type.MASKED_WALLET, mwb);
-
-    WalletOnlineService ows =
-        new WalletOnlineService(Config.getMerchantId(), Config.getMerchantSecret());
 
     // Respond to request with JWT
     PrintWriter pw;
     try {
       pw = resp.getWriter();
-      pw.write(ows.javaToJwt(mwr));
+      pw.write(Config.makeWalletOnlineServices().javaToJwt(mwr));
     } catch (IOException e) {
       e.printStackTrace();
     } catch (InvalidKeyException e) {
@@ -86,5 +87,13 @@ public class MaskedWalletRequestServlet extends HttpServlet {
     } catch (SignatureException e) {
       e.printStackTrace();
     }
+  }
+
+  private String getParameterOrDefault(HttpServletRequest req, String key, String defaultValue) {
+    String result = req.getParameter(key);
+    if (result == null){
+      return defaultValue;
+    }
+    return result;
   }
 }

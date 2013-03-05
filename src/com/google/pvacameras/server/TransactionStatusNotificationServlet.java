@@ -19,7 +19,6 @@ package com.google.pvacameras.server;
 import com.google.pvacameras.server.config.Config;
 import com.google.wallet.online.jwt.JwtRequest;
 import com.google.wallet.online.jwt.TransactionStatusBody;
-import com.google.wallet.online.jwt.util.WalletOnlineService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,7 +41,7 @@ public class TransactionStatusNotificationServlet extends HttpServlet {
 
   /**
    * The following parameters are parsed:
-   * 
+   *
    * gid - Google Transaction Id
    */
   @Override
@@ -50,10 +49,8 @@ public class TransactionStatusNotificationServlet extends HttpServlet {
 
     // Get Google Id
     String googleId = req.getParameter("gid");
-    
+
     // Generate TransactionStatusNotification JWT
-    WalletOnlineService ows =
-        new WalletOnlineService(Config.getMerchantId(), Config.getMerchantSecret());
     TransactionStatusBody tsb =
         new TransactionStatusBody(googleId, TransactionStatusBody.Status.SUCCESS);
     JwtRequest tsn = new JwtRequest(JwtRequest.Type.TRANSACTION_STATUS, tsb);
@@ -62,7 +59,7 @@ public class TransactionStatusNotificationServlet extends HttpServlet {
     try {
       PrintWriter pw;
       pw = resp.getWriter();
-      pw.print(ows.javaToJwt(tsn));
+      pw.print(Config.makeWalletOnlineServices().javaToJwt(tsn));
     } catch (IOException e) {
       e.printStackTrace();
     } catch (InvalidKeyException e) {

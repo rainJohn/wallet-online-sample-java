@@ -15,14 +15,14 @@ public class Item {
   private String id;
 
   public static final Item CAMERA_1 = new Item("1", "Camera XY000", 800, "img/XY000-small.png",
-      "High Resolution 16.2 MP DX-format CMOS sensor Body only.",
-      "Lenses sold separately. High Speed 6 frames per second continuous shooting up to 100 shots.");
+      "High Resolution 16.2 MP DX-format CMOS sensor Body only.", "Lenses sold separately. " +
+      "High Speed 6 frames per second continuous shooting up to 100 shots.");
   public static final Item CAMERA_2 = new Item("2", "Camera XY001", 1950, "img/XY001-small.png",
-      "High Resolution 16.2 MP DX-format CMOS sensor Body only.",
-      "Lenses sold separately. High Speed 6 frames per second continuous shooting up to 100 shots.");
+      "High Resolution 16.2 MP DX-format CMOS sensor Body only.", "Lenses sold separately. " +
+      "High Speed 6 frames per second continuous shooting up to 100 shots.");
   public static final Item CAMERA_3 = new Item("3", "Camera XY002", 2100, "img/XY002-small.png",
-      "High Resolution 16.2 MP DX-format CMOS sensor Body only.",
-      "Lenses sold separately. High Speed 6 frames per second continuous shooting up to 100 shots.");
+      "High Resolution 16.2 MP DX-format CMOS sensor Body only.", "Lenses sold separately. " +
+      "High Speed 6 frames per second continuous shooting up to 100 shots.");
 
   public Item(String id,
       String name,

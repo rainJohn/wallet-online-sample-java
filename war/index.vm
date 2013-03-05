@@ -27,13 +27,13 @@
       <div id="login-widget">
         <ul id="menu-left" data-role="menu">
           <li>#if(!$email) <span data-role="button" onclick=
-          "Xyz.App.login()()">Login</span> #else <span data-role="button"
+          "Xyz.App.login()">Login</span> #else <span data-role="button"
           data-icon="arrow-d" data-iconpos=
           "left">$truncEmail</span>
             <ul data-role="listview" data-inset="true">
-              <li data-icon="false" onclick="Xyz.App.logout()" class=
-              "logout"><a href="#" class="logout-button"></a> Sign
-              out</li>
+              <li data-icon="false" onclick="Xyz.App.logout()" class="logout">
+                <a href="#" class="logout-button">Sign out</a>
+              </li>
             </ul>#end
           </li>
         </ul>

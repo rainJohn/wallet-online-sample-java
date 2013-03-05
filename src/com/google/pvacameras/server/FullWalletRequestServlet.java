@@ -21,7 +21,6 @@ import com.google.wallet.online.jwt.Cart;
 import com.google.wallet.online.jwt.FullWalletBody;
 import com.google.wallet.online.jwt.JwtRequest;
 import com.google.wallet.online.jwt.LineItem;
-import com.google.wallet.online.jwt.util.WalletOnlineService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -47,9 +46,9 @@ public class FullWalletRequestServlet extends HttpServlet {
   /**
    * The following parameters are parsed:
    *
-   *  description - description of the object 
-   *  quantity - number of items purchased 
-   *  unitprice - price per item 
+   *  description - description of the object
+   *  quantity - number of items purchased
+   *  unitprice - price per item
    *  gid - Google transaction ID
    */
   @Override
@@ -63,9 +62,6 @@ public class FullWalletRequestServlet extends HttpServlet {
     String gid = req.getParameter("gid");
 
     // Create FullWalletRequest JWT
-    WalletOnlineService ows =
-        new WalletOnlineService(Config.getMerchantId(), Config.getMerchantSecret());
-
     LineItem item = new LineItem(description, Integer.valueOf(quantity), unitprice);
     item.setIsDigital(false);
 
@@ -84,7 +80,7 @@ public class FullWalletRequestServlet extends HttpServlet {
     PrintWriter pw;
     try {
       pw = resp.getWriter();
-      pw.write(ows.javaToJwt(fwr));
+      pw.write(Config.makeWalletOnlineServices().javaToJwt(fwr));
     } catch (IOException e) {
       e.printStackTrace();
     } catch (InvalidKeyException e) {
