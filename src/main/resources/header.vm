@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, maximum-scale=1.0">
+<title>XYZ Inc #if($environment) $environment #end</title>
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.2.0/jquery.mobile.min.css" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css" />
+  <script type="text/javascript" src="$walletJSUrl"></script>
+  <script type="text/javascript">
+    /*Credentials rendered on the server by Velocity*/
+      var clientId = "$clientId";
+  </script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.cookie/1.3.1/jquery.cookie.js"></script>
+</head>
+<body>
+  <div id="fullpage" class="ui-body-c ui-page-active">
+    <div role="banner" class="ui-header ui-bar-b" id="header">
+      <div id="login-widget">
+        <ul id="menu-left">
+          <li>
+          #if(!$noLoginButton)
+            #if(!$email)
+            <span onclick="Xyz.Sso.login()" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-b">
+              <span class="ui-btn-inner ui-btn-corner-all">
+                <span class="ui-btn-text">Login</span>
+              </span>
+            </span>
+            #else
+            <span onclick="jQuery('#logout-button').show()" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-left ui-btn-up-b">
+              <span class="ui-btn-inner ui-btn-corner-all">
+                <span class="ui-btn-text">$truncEmail</span>
+                <span class="ui-icon ui-icon-arrow-d ui-icon-shadow">&nbsp;</span>
+              </span>
+            </span>
+            <ul id="logout-button" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+              <li data-icon="false" class="logout ui-btn ui-btn-icon-right ui-corner-top ui-corner-bottom ui-li-last ui-btn-up-b">
+                <span onclick="Xyz.Sso.logout()" class="ui-btn-inner ui-li ui-corner-top">
+                  <span class="ui-btn-text">Sign out</span>
+                </span>
+              </li>
+            </ul>
+            #end
+          #end
+          </li>
+        </ul>
+      </div>
+
+      <div class="center">
+        <span class="title">XYZ, Inc.</span>
+        #if(!$noCartDisplay)
+          <div class="cart-items">
+            Cart (1)
+          </div>
+        #end
+      </div>
+    </div>
+    <div id="header2" class="ui-header ui-bar-y">
+      <div class="sale-header">
+        $saleHeader
+      </div>
+    </div>

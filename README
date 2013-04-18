@@ -2,6 +2,7 @@
 Introduction
 This application is a sample integration of Google Wallet for online commerce.
 It demonstrates how to integrate the API into your web application.
+This sample is optimized for mobile devices but the integration model is the same for both mobile and desktop.
 
 Details
 Prerequisite Google AppEngine? Eclipse Plugin
@@ -26,11 +27,23 @@ properties->Java Build Path->Libraries
 
 Under war/WEB-INF/appengine-web.xml specify your sandbox and production ID and auth key.
 
+The important parts of this sample app.
+wallet.js
+  - This contains the authorization code which checks if a user has already authorized for this
+  merchant to get their masked wallet.
+order.vm/OrderPage.java
+  - This page contains the button and the success and failure callback for that button.
+confirm.vm/Confirm.java
+  - This page contains a change wallet button and the corrosponding callbacks.
+  - It also contains the full wallet request and the callbacks for that.
+receipt.vm/ReceiptPage.java
+  - This page contains the call to notifyTransactionStatus
+
 Run the application as a web app
 
 Sample applications:
 
 We've included two separate example implementations:
-Single page ajax - The default example can be found at http://localhost:[port].  This example uses ajax to request jwts and uses css animations for the page transitions.  If you're planning on developing an ajax application, take a look at this sample.
+Single page ajax - The default example can be found at http://localhost:[port]/store.  This example uses ajax to request jwts and uses css animations for the page transitions.  If you're planning on developing an ajax application, take a look at this sample.
 
-Multi page posts - This example can be found at http://localhost:[port]/select.  This example uses posts to direct users to the next page in the purchase flow.  If you're planning on developing a multi page application, take a look at this sample.
+Multi page posts - This example can be found at http://localhost:[port].  This example uses posts to direct users to the next page in the purchase flow.  If you're planning on developing a multi page application, take a look at this sample.
