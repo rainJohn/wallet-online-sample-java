@@ -1,49 +1,60 @@
 
-Introduction
+XYZ Sample App
+-------------------------
 This application is a sample integration of Google Wallet for online commerce.
 It demonstrates how to integrate the API into your web application.
 This sample is optimized for mobile devices but the integration model is the same for both mobile and desktop.
 
-Details
-Prerequisite Google AppEngine? Eclipse Plugin
-https://developers.google.com/eclipse/
+Prerequisites
+-------------------------
+This project uses Maven. You need to have at least maven 3.0.x installed on your machine.
+You can run mvn verify in the project source to ensure its all setup. On first load, this
+command downloads the necessary artifacts/jars.
 
-Running the application:
+Configuration
+--------
+Under src/main/webapp/WEB-INF/appengine-web.xml specify your sandbox and production ID and auth key.
 
-In eclipse import the folder as a new project Right click on the project under
-Properities->Google->AppEngine? check the box "Use Google Appengine" Provide
-your project name and version(if you wish to deploy to appengine use the same
-name as your appengine instance), click ok Download and include the following
-libraries in war/WEB-INF/lib:
+Building:
+--------
+Once you have the source, here are the set of instruction for building the project
 
-jakarta velocity
-jakarta commons logging
-gson
-jsontoken
-google guava
-joda time
-Add the library jars to your build path under
-properties->Java Build Path->Libraries
+$ mvn package
 
-Under war/WEB-INF/appengine-web.xml specify your sandbox and production ID and auth key.
+This compiles and packages up a war (Web Archive) that can be deployed to appengine.
+
+Running a Local Dev Server:
+-------------------------
+To run the development server locally, run the following command
+
+$ mvn appengine:devserver
+
+You can now visit http://localhost:8080/ in your browser to see the app in action
+
+Updating/Uploading to App Engine:
+--------------------------------
+Before you perform this step, ensure that you have setup the correct app-version in appengine-web.xml
+Replace the APP_IDENTIFIER with the one registered with appengine.google.com
+
+ <application>APP_IDENTIFIER</application>
+
+To upload, run the following command
+
+$ mvn appengine:update
+
+This creates or updates an app version
+
+For more information on using Appengine with Maven and for other supported commands,
+please visit https://developers.google.com/appengine/docs/java/tools/maven 
 
 The important parts of this sample app.
 wallet.js
   - This contains the authorization code which checks if a user has already authorized for this
   merchant to get their masked wallet.
-order.vm/OrderPage.java
+order.vm & OrderPage.java
   - This page contains the button and the success and failure callback for that button.
-confirm.vm/Confirm.java
+confirm.vm & Confirm.java
   - This page contains a change wallet button and the corrosponding callbacks.
   - It also contains the full wallet request and the callbacks for that.
-receipt.vm/ReceiptPage.java
+receipt.vm & ReceiptPage.java
   - This page contains the call to notifyTransactionStatus
-
-Run the application as a web app
-
-Sample applications:
-
-We've included two separate example implementations:
-Single page ajax - The default example can be found at http://localhost:[port]/store.  This example uses ajax to request jwts and uses css animations for the page transitions.  If you're planning on developing an ajax application, take a look at this sample.
-
-Multi page posts - This example can be found at http://localhost:[port].  This example uses posts to direct users to the next page in the purchase flow.  If you're planning on developing a multi page application, take a look at this sample.
